@@ -1,9 +1,15 @@
 ---
 import Layout from "../layouts/Layout.astro"
+import { buckets, getBuckets } from "../cloudflare"
+import MilkdownViewer from "../components/MilkdownViewer.astro"
 
-
+const url = "https://pub-77d5e941b80341b7a40c2f0c3dbf9f67.r2.dev/obsidian/atom.md"
+const response = await fetch(url)
+const content = await response.text()
 ---
 
 <Layout title="MD editor">
 	<h1>Main page</h1>
+	<p>Result: {content}</p>
+<MilkdownViewer content={content}>
 </Layout>
