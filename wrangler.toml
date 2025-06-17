@@ -1,0 +1,4 @@
+[[r2_buckets]]
+binding = "MY_BUCKET"
+bucket_name = "bucket1"
+preview_bucket_name = "bucket1"
