@@ -1,0 +1,35 @@
+---
+export const prerender = false;
+
+import MilkdownViewer from "../../components/MilkdownViewer.astro";
+import Layout from "../../layouts/Layout.astro";
+
+const { note } = Astro.params;
+
+---
+
+<Layout>
+  <h1 class="note">{note}</h1>
+  <!-- <p>URL: { url }</p> -->
+  <!-- <p>Data: { content }</p> -->
+  <MilkdownViewer content={note as string} />
+
+  <p>🔁 역링크</p>
+  <!-- {
+    backlinks.length > 0 && (
+      <>
+        
+        <ul>
+          {backlinks.map((name) => (
+            <li>
+              <a href={`/${name}`}>{name}</a>
+            </li>
+          ))}
+        </ul>
+      </>
+    )
+  } -->
+
+  <a href="/">← 문서 목록</a>
+  <a href="/graph">🖇️ Graph View</a>
+</Layout>

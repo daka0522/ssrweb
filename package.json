@@ -10,6 +10,10 @@
   },
   "dependencies": {
     "@astrojs/cloudflare": "^12.5.4",
+    "@milkdown/core": "^7.13.1",
+    "@milkdown/plugin-math": "^7.5.9",
+    "@milkdown/preset-commonmark": "^7.13.1",
+    "@milkdown/preset-gfm": "^7.13.1",
     "astro": "^5.9.3"
   }
 }

@@ -1,0 +1,66 @@
+---
+interface Props {
+  content: string;
+}
+
+const { content } = Astro.props;
+
+const folderPath = "note"
+
+function convertInternalLinks(content: string): string {
+  return content.replace(/\[\[([^\]]+)\]\]/g, (_, linkText) => {
+    const cleanPath = linkText.replace(/\.md$/, "");
+    return `[${cleanPath}](/${folderPath}/${cleanPath})`;
+  });
+}
+---
+
+<div id="editor" class="markdown-viewer"></div>
+
+<div id="content-data" style="display: none;">
+  {convertInternalLinks(content)}
+</div>
+
+<style>
+  .markdown-viewer :global(a) {
+    cursor: pointer;
+    color: #0366d6;
+    text-decoration: none;
+  }
+  .markdown-viewer :global(a:hover) {
+    text-decoration: underline;
+  }
+</style>
+
+<script>
+  import { Editor, rootCtx, defaultValueCtx } from "@milkdown/core";
+  import { commonmark } from "@milkdown/preset-commonmark";
+  import { gfm } from "@milkdown/preset-gfm";
+  import { math } from "@milkdown/plugin-math";
+
+  const editor = Editor.make()
+    .config((ctx) => {
+      ctx.set(rootCtx, document.querySelector("#editor")!);
+      ctx.set(
+        defaultValueCtx,
+        document.querySelector("#content-data")?.textContent || ""
+      );
+    })
+    .use(commonmark)
+    .use(gfm)
+    .use(math);
+
+  editor.create();
+
+  // 링크 클릭 핸들러
+  document.querySelector("#editor")?.addEventListener("click", (e) => {
+    const target = e.target as HTMLElement;
+    if (target.tagName === "A" && target.getAttribute("href")) {
+      e.preventDefault();
+      const href = target.closest("a")?.getAttribute("href");
+      if (href) {
+        window.location.href = href.replace(/\.md$/, "");
+      }
+    }
+  });
+</script>
